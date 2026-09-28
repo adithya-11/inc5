@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gold Rush Arcade · Tic-Tac-Toe Cabinet</title>
+  <!--
+    Activity 05 · Build Challenge · Retro Tic-Tac-Toe Cabinet
+    Adithya 
+    Aishwarya 
+  -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="marquee">
+    <h1>★ Gold Rush Arcade ★</h1>
+    <nav aria-label="Cabinet menu">
+      <ul>
+        <li><a href="#play">Play</a></li>
+        <li><a href="#scores">Scores</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="cabinet">
+    <h2 id="play">Player 1 vs CPU</h2>
+
+    <div class="stage">
+      <div class="board" role="group" aria-label="Tic-tac-toe board">
+        <button class="cell c1 x" type="button" aria-label="Row 1 column 1: X">X</button>
+        <button class="cell c2 o" type="button" aria-label="Row 1 column 2: O">O</button>
+        <button class="cell c3" type="button" aria-label="Row 1 column 3: empty"></button>
+        <button class="cell c4 o" type="button" aria-label="Row 2 column 1: O">O</button>
+        <button class="cell c5 x" type="button" aria-label="Row 2 column 2: X">X</button>
+        <button class="cell c6" type="button" aria-label="Row 2 column 3: empty"></button>
+        <button class="cell c7" type="button" aria-label="Row 3 column 1: empty"></button>
+        <button class="cell c8" type="button" aria-label="Row 3 column 2: empty"></button>
+        <button class="cell c9 x" type="button" aria-label="Row 3 column 3: X">X</button>
+      </div>
+      <div class="win-line" aria-hidden="true"></div>
+      <div class="badge">PLAYER 1 WINS</div>
+    </div>
+
+    <section class="scoreboard" id="scores" aria-label="Scoreboard">
+      <div class="score-card"><strong>03</strong><span>PLAYER 1</span></div>
+      <div class="score-card"><strong>01</strong><span>DRAWS</span></div>
+      <div class="score-card"><strong>02</strong><span>CPU</span></div>
+    </section>
+
+    <button class="coin-btn" type="button">Insert Coin</button>
+  </main>
+
+  <footer>© Gold Rush Arcade · HTML &amp; CSS only</footer>
+</body>
+</html>

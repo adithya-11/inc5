@@ -1,0 +1,242 @@
+/* ===== Custom properties (Checkpoint 6) ===== */
+:root {
+  --navy: #050d24;
+  --navy-2: #0b1a45;
+  --blue: #1d4ed8;
+  --sky: #60a5fa;
+  --gold: #fbbf24;
+  --gold-deep: #b45309;
+  --ink: #e8efff;
+  --radius: 16px;
+  --font: ui-monospace, "Cascadia Mono", "Courier New", monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  min-height: 100vh;
+  padding: 1.5rem;
+  font-family: var(--font);
+  color: var(--ink);
+  line-height: 1.5;
+  background: radial-gradient(circle at 50% 0%, var(--navy-2), var(--navy) 70%);
+}
+
+/* ===== Checkpoint 1 · Flexbox marquee header + nav ===== */
+.marquee {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 760px;
+  margin: 0 auto 1.5rem;
+  padding: 1rem 1.5rem;
+  border: 3px solid var(--gold);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--blue), var(--navy-2));
+  box-shadow: 0 0 24px rgba(251, 191, 36, 0.35), inset 0 0 12px rgba(0, 0, 0, 0.5);
+}
+
+.marquee h1 {
+  font-size: 1.4rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.8);
+}
+
+.marquee nav ul {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.75rem;
+  list-style: none;
+}
+
+.marquee nav a,
+.coin-btn {
+  display: inline-block;
+  padding: 0.4rem 0.9rem;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--gold);
+  background: var(--navy);
+  border: 2px solid var(--gold);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+/* ===== Cabinet shell ===== */
+.cabinet {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 1.5rem;
+  text-align: center;
+  background: linear-gradient(180deg, var(--navy-2), var(--navy));
+  border: 3px solid var(--gold);
+  border-radius: 40px 40px var(--radius) var(--radius);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+.cabinet h2 {
+  margin-bottom: 2.5rem;
+  font-size: 1rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--sky);
+}
+
+/* ===== Checkpoint 4 · Layered composition ===== */
+.stage {
+  position: relative;
+  width: min(100%, 360px);
+  margin: 0 auto 2rem;
+}
+
+/* ===== Checkpoint 2 · Grid board 3x3 (+ grid-template-areas bonus) ===== */
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas:
+    "a1 a2 a3"
+    "b1 b2 b3"
+    "c1 c2 c3";
+  gap: 8px;
+  aspect-ratio: 1;
+  padding: 8px;
+  background: var(--gold);
+  border-radius: var(--radius);
+}
+
+.c1 { grid-area: a1; } .c2 { grid-area: a2; } .c3 { grid-area: a3; }
+.c4 { grid-area: b1; } .c5 { grid-area: b2; } .c6 { grid-area: b3; }
+.c7 { grid-area: c1; } .c8 { grid-area: c2; } .c9 { grid-area: c3; }
+
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: inherit;
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--sky);
+  background: var(--navy);
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  /* ===== Checkpoint 5 · Micro-interaction ===== */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cell.x { color: var(--gold); text-shadow: 0 0 12px rgba(251, 191, 36, 0.9); }
+.cell.o { color: var(--sky);  text-shadow: 0 0 12px rgba(96, 165, 250, 0.9); }
+
+.cell:hover,
+.cell:focus-visible,
+.marquee nav a:hover,
+.marquee nav a:focus-visible,
+.coin-btn:hover,
+.coin-btn:focus-visible {
+  transform: translateY(-4px) scale(1.06);
+  box-shadow: 0 0 18px var(--gold), 0 8px 14px rgba(0, 0, 0, 0.5);
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.marquee nav a,
+.coin-btn {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Absolute child 1: the winning line, stacked with z-index */
+.win-line {
+  position: absolute;
+  z-index: 20;
+  top: 50%;
+  left: 50%;
+  width: 140%;
+  height: 8px;
+  margin: -4px 0 0 -70%;
+  background: var(--gold);
+  border-radius: 4px;
+  box-shadow: 0 0 16px var(--gold), 0 0 32px var(--sky);
+  transform: rotate(45deg) scaleX(0);
+  /* ===== Checkpoint 3 · Keyframes with delay + fill-mode ===== */
+  animation: sweep 1.6s ease-in-out 1s both;
+}
+
+/* Absolute child 2: the floating badge, above everything */
+.badge {
+  position: absolute;
+  z-index: 30;
+  top: -1.6rem;
+  left: 50%;
+  padding: 0.4rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 900;
+  white-space: nowrap;
+  letter-spacing: 0.1em;
+  color: var(--navy);
+  background: var(--gold);
+  border: 3px solid var(--blue);
+  border-radius: 999px;
+  box-shadow: 0 0 20px var(--gold);
+  transform: translate(-50%, 0) scale(0);
+  animation: pop 0.8s ease-out 2.6s both;
+}
+
+@keyframes sweep {
+  0%   { transform: rotate(45deg) scaleX(0); }
+  50%  { transform: rotate(45deg) scaleX(0.6); }
+  100% { transform: rotate(45deg) scaleX(1); }
+}
+
+@keyframes pop {
+  0%   { transform: translate(-50%, 20px) scale(0); }
+  50%  { transform: translate(-50%, -8px) scale(1.25); }
+  100% { transform: translate(-50%, 0) scale(1); }
+}
+
+/* ===== Scoreboard (flex card row) ===== */
+.scoreboard {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.score-card {
+  flex: 1 1 140px;
+  padding: 0.8rem;
+  background: var(--navy);
+  border: 2px solid var(--blue);
+  border-radius: var(--radius);
+}
+
+.score-card strong { display: block; font-size: 1.8rem; color: var(--gold); }
+.score-card span { font-size: 0.8rem; letter-spacing: 0.15em; color: var(--sky); }
+
+footer {
+  max-width: 760px;
+  margin: 1.5rem auto 0;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--sky);
+}
+
+/* ===== Checkpoint 6 · Responsive layout change ===== */
+@media (max-width: 768px) {
+  body { padding: 0.75rem; }
+  .marquee { flex-direction: column; text-align: center; }
+  .marquee nav ul { flex-wrap: wrap; justify-content: center; }
+  .scoreboard { flex-direction: column; }
+  .cell { font-size: 2.2rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .win-line, .badge { animation-duration: 0.01s; animation-delay: 0s; }
+}
